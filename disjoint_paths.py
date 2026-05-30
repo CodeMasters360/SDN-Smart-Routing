@@ -364,5 +364,5 @@ G.add_edge ('H', 'M', weight=1)
 G.add_edge ('D', 'Z', weight=1)
 G.add_edge ('H', 'Z', weight=1)
 
-print edge_disjoint_shortest_pair(G, 'C', 'Z')
+print(edge_disjoint_shortest_pair(G, 'C', 'Z'))
 '''
