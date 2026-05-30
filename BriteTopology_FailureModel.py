@@ -46,7 +46,7 @@ import pylab as plt
 
 from collections import Counter
 
-from itertools import tee, izip
+from itertools import tee
 
 import string
 
@@ -140,27 +140,26 @@ def topology():
         S48 = net.addSwitch('s48')
         S49 = net.addSwitch('s49')
         S50 = net.addSwitch('s50')
-	S51 = net.addSwitch('s51')
-	S52 = net.addSwitch('s52')
-	S53 = net.addSwitch('s53')
-	S54 = net.addSwitch('s54')
-	S55 = net.addSwitch('s55')
-	S56 = net.addSwitch('s56')
-	S57 = net.addSwitch('s57')
-	S58 = net.addSwitch('s58')
-	S59 = net.addSwitch('s59')
-	S60 = net.addSwitch('s60')
-	S61 = net.addSwitch('s61')
-	S62 = net.addSwitch('s62')
-	S63 = net.addSwitch('s63')
-	S64 = net.addSwitch('s64')
-	S65 = net.addSwitch('s65')
-	S66 = net.addSwitch('s66')
-	S67 = net.addSwitch('s67')
-	S68 = net.addSwitch('s68')
-	S69 = net.addSwitch('s69')
-	S70 = net.addSwitch('s70')
-	
+        S51 = net.addSwitch('s51')
+        S52 = net.addSwitch('s52')
+        S53 = net.addSwitch('s53')
+        S54 = net.addSwitch('s54')
+        S55 = net.addSwitch('s55')
+        S56 = net.addSwitch('s56')
+        S57 = net.addSwitch('s57')
+        S58 = net.addSwitch('s58')
+        S59 = net.addSwitch('s59')
+        S60 = net.addSwitch('s60')
+        S61 = net.addSwitch('s61')
+        S62 = net.addSwitch('s62')
+        S63 = net.addSwitch('s63')
+        S64 = net.addSwitch('s64')
+        S65 = net.addSwitch('s65')
+        S66 = net.addSwitch('s66')
+        S67 = net.addSwitch('s67')
+        S68 = net.addSwitch('s68')
+        S69 = net.addSwitch('s69')
+        S70 = net.addSwitch('s70')
 	
 
         c0 = net.addController( 'c0', controller=RemoteController, ip='127.0.0.1', port=6633 )
@@ -168,145 +167,145 @@ def topology():
         # Adding 140 Links of the Brite_Topology 
 
         net.addLink (S1 ,S3 )
-	net.addLink (S1 ,S4 )
-	net.addLink (S1 ,S5 )
-	net.addLink (S1 ,S8 )
-	net.addLink (S1 ,S11 )
-	net.addLink (S1 ,S16 )
-	net.addLink (S1 ,S57 )
-	net.addLink (S1 ,S28 )
-	net.addLink (S2 ,S65 )
-	net.addLink (S2 ,S3 )
-	net.addLink (S2 ,S6 )
-	net.addLink (S2 ,S7 )
-	net.addLink (S2 ,S9 )
-	net.addLink (S2 ,S23 )
-	net.addLink (S2 ,S14 )
-	net.addLink (S2 ,S17 )
-	net.addLink (S2 ,S19 )
-	net.addLink (S2 ,S55 )
-	net.addLink (S2 ,S39 )
-	net.addLink (S2 ,S26 )
-	net.addLink (S3 ,S4 )
-	net.addLink (S3 ,S69 )
-	net.addLink (S3 ,S22 )
-	net.addLink (S3 ,S28 )
-	net.addLink (S4 ,S32 )
-	net.addLink (S4 ,S34 )
-	net.addLink (S4 ,S5 )
-	net.addLink (S4 ,S33 )
-	net.addLink (S4 ,S8 )
-	net.addLink (S4 ,S42 )
-	net.addLink (S4 ,S12 )
-	net.addLink (S4 ,S15 )
-	net.addLink (S4 ,S31 )
-	net.addLink (S5 ,S6 )
-	net.addLink (S5 ,S8 )
-	net.addLink (S5 ,S11 )
-	net.addLink (S5 ,S49 )
-	net.addLink (S5 ,S26 )
-	net.addLink (S6 ,S35 )
-	net.addLink (S6 ,S7 )
-	net.addLink (S6 ,S10 )
-	net.addLink (S6 ,S12 )
-	net.addLink (S6 ,S20 )
-	net.addLink (S7 ,S19 )
-	net.addLink (S7 ,S34 )
-	net.addLink (S7 ,S13 )
-	net.addLink (S7 ,S51 )
-	net.addLink (S7 ,S23 )
-	net.addLink (S7 ,S61 )
-	net.addLink (S8 ,S9 )
-	net.addLink (S8 ,S10 )
-	net.addLink (S8 ,S13 )
-	net.addLink (S8 ,S48 )
-	net.addLink (S8 ,S36 )
-	net.addLink (S9 ,S49 )
-	net.addLink (S9 ,S14 )
-	net.addLink (S11 ,S66 )
-	net.addLink (S11 ,S67 )
-	net.addLink (S11 ,S15 )
-	net.addLink (S11 ,S16 )
-	net.addLink (S11 ,S35 )
-	net.addLink (S11 ,S52 )
-	net.addLink (S11 ,S29 )
-	net.addLink (S12 ,S20 )
-	net.addLink (S12 ,S18 )
-	net.addLink (S12 ,S22 )
-	net.addLink (S13 ,S51 )
-	net.addLink (S13 ,S52 )
-	net.addLink (S13 ,S14 )
-	net.addLink (S14 ,S38 )
-	net.addLink (S14 ,S43 )
-	net.addLink (S14 ,S45 )
-	net.addLink (S14 ,S17 )
-	net.addLink (S14 ,S21 )
-	net.addLink (S14 ,S25 )
-	net.addLink (S15 ,S66 )
-	net.addLink (S15 ,S40 )
-	net.addLink (S15 ,S21 )
-	net.addLink (S15 ,S54 )
-	net.addLink (S16 ,S19 )
-	net.addLink (S16 ,S24 )
-	net.addLink (S16 ,S25 )
-	net.addLink (S17 ,S18 )
-	net.addLink (S17 ,S53 )
-	net.addLink (S18 ,S33 )
-	net.addLink (S18 ,S70 )
-	net.addLink (S18 ,S50 )
-	net.addLink (S18 ,S53 )
-	net.addLink (S18 ,S27 )
-	net.addLink (S19 ,S62 )
-	net.addLink (S20 ,S59 )
-	net.addLink (S20 ,S46 )
-	net.addLink (S21 ,S47 )
-	net.addLink (S21 ,S31 )
-	net.addLink (S22 ,S57 )
-	net.addLink (S23 ,S41 )
-	net.addLink (S23 ,S56 )
-	net.addLink (S23 ,S24 )
-	net.addLink (S23 ,S29 )
-	net.addLink (S24 ,S42 )
-	net.addLink (S24 ,S27 )
-	net.addLink (S24 ,S30 )
-	net.addLink (S25 ,S62 )
-	net.addLink (S25 ,S44 )
-	net.addLink (S25 ,S46 )
-	net.addLink (S26 ,S36 )
-	net.addLink (S26 ,S63 )
-	net.addLink (S27 ,S37 )
-	net.addLink (S27 ,S58 )
-	net.addLink (S27 ,S59 )
-	net.addLink (S27 ,S30 )
-	net.addLink (S28 ,S63 )
-	net.addLink (S29 ,S32 )
-	net.addLink (S29 ,S40 )
-	net.addLink (S30 ,S50 )
-	net.addLink (S30 ,S60 )
-	net.addLink (S30 ,S47 )
-	net.addLink (S32 ,S56 )
-	net.addLink (S33 ,S38 )
-	net.addLink (S34 ,S44 )
-	net.addLink (S34 ,S43 )
-	net.addLink (S35 ,S37 )
-	net.addLink (S35 ,S39 )
-	net.addLink (S36 ,S64 )
-	net.addLink (S36 ,S48 )
-	net.addLink (S37 ,S68 )
-	net.addLink (S37 ,S45 )
-	net.addLink (S38 ,S54 )
-	net.addLink (S38 ,S41 )
-	net.addLink (S42 ,S60 )
-	net.addLink (S45 ,S55 )
-	net.addLink (S46 ,S67 )
-	net.addLink (S46 ,S57 )
-	net.addLink (S47 ,S65 )
-	net.addLink (S51 ,S58 )
-	net.addLink (S58 ,S61 )
-	net.addLink (S58 ,S70 )
-	net.addLink (S60 ,S69 )
-	net.addLink (S63 ,S64 )
-	net.addLink (S67 ,S68 )
+        net.addLink (S1 ,S4 )
+        net.addLink (S1 ,S5 )
+        net.addLink (S1 ,S8 )
+        net.addLink (S1 ,S11 )
+        net.addLink (S1 ,S16 )
+        net.addLink (S1 ,S57 )
+        net.addLink (S1 ,S28 )
+        net.addLink (S2 ,S65 )
+        net.addLink (S2 ,S3 )
+        net.addLink (S2 ,S6 )
+        net.addLink (S2 ,S7 )
+        net.addLink (S2 ,S9 )
+        net.addLink (S2 ,S23 )
+        net.addLink (S2 ,S14 )
+        net.addLink (S2 ,S17 )
+        net.addLink (S2 ,S19 )
+        net.addLink (S2 ,S55 )
+        net.addLink (S2 ,S39 )
+        net.addLink (S2 ,S26 )
+        net.addLink (S3 ,S4 )
+        net.addLink (S3 ,S69 )
+        net.addLink (S3 ,S22 )
+        net.addLink (S3 ,S28 )
+        net.addLink (S4 ,S32 )
+        net.addLink (S4 ,S34 )
+        net.addLink (S4 ,S5 )
+        net.addLink (S4 ,S33 )
+        net.addLink (S4 ,S8 )
+        net.addLink (S4 ,S42 )
+        net.addLink (S4 ,S12 )
+        net.addLink (S4 ,S15 )
+        net.addLink (S4 ,S31 )
+        net.addLink (S5 ,S6 )
+        net.addLink (S5 ,S8 )
+        net.addLink (S5 ,S11 )
+        net.addLink (S5 ,S49 )
+        net.addLink (S5 ,S26 )
+        net.addLink (S6 ,S35 )
+        net.addLink (S6 ,S7 )
+        net.addLink (S6 ,S10 )
+        net.addLink (S6 ,S12 )
+        net.addLink (S6 ,S20 )
+        net.addLink (S7 ,S19 )
+        net.addLink (S7 ,S34 )
+        net.addLink (S7 ,S13 )
+        net.addLink (S7 ,S51 )
+        net.addLink (S7 ,S23 )
+        net.addLink (S7 ,S61 )
+        net.addLink (S8 ,S9 )
+        net.addLink (S8 ,S10 )
+        net.addLink (S8 ,S13 )
+        net.addLink (S8 ,S48 )
+        net.addLink (S8 ,S36 )
+        net.addLink (S9 ,S49 )
+        net.addLink (S9 ,S14 )
+        net.addLink (S11 ,S66 )
+        net.addLink (S11 ,S67 )
+        net.addLink (S11 ,S15 )
+        net.addLink (S11 ,S16 )
+        net.addLink (S11 ,S35 )
+        net.addLink (S11 ,S52 )
+        net.addLink (S11 ,S29 )
+        net.addLink (S12 ,S20 )
+        net.addLink (S12 ,S18 )
+        net.addLink (S12 ,S22 )
+        net.addLink (S13 ,S51 )
+        net.addLink (S13 ,S52 )
+        net.addLink (S13 ,S14 )
+        net.addLink (S14 ,S38 )
+        net.addLink (S14 ,S43 )
+        net.addLink (S14 ,S45 )
+        net.addLink (S14 ,S17 )
+        net.addLink (S14 ,S21 )
+        net.addLink (S14 ,S25 )
+        net.addLink (S15 ,S66 )
+        net.addLink (S15 ,S40 )
+        net.addLink (S15 ,S21 )
+        net.addLink (S15 ,S54 )
+        net.addLink (S16 ,S19 )
+        net.addLink (S16 ,S24 )
+        net.addLink (S16 ,S25 )
+        net.addLink (S17 ,S18 )
+        net.addLink (S17 ,S53 )
+        net.addLink (S18 ,S33 )
+        net.addLink (S18 ,S70 )
+        net.addLink (S18 ,S50 )
+        net.addLink (S18 ,S53 )
+        net.addLink (S18 ,S27 )
+        net.addLink (S19 ,S62 )
+        net.addLink (S20 ,S59 )
+        net.addLink (S20 ,S46 )
+        net.addLink (S21 ,S47 )
+        net.addLink (S21 ,S31 )
+        net.addLink (S22 ,S57 )
+        net.addLink (S23 ,S41 )
+        net.addLink (S23 ,S56 )
+        net.addLink (S23 ,S24 )
+        net.addLink (S23 ,S29 )
+        net.addLink (S24 ,S42 )
+        net.addLink (S24 ,S27 )
+        net.addLink (S24 ,S30 )
+        net.addLink (S25 ,S62 )
+        net.addLink (S25 ,S44 )
+        net.addLink (S25 ,S46 )
+        net.addLink (S26 ,S36 )
+        net.addLink (S26 ,S63 )
+        net.addLink (S27 ,S37 )
+        net.addLink (S27 ,S58 )
+        net.addLink (S27 ,S59 )
+        net.addLink (S27 ,S30 )
+        net.addLink (S28 ,S63 )
+        net.addLink (S29 ,S32 )
+        net.addLink (S29 ,S40 )
+        net.addLink (S30 ,S50 )
+        net.addLink (S30 ,S60 )
+        net.addLink (S30 ,S47 )
+        net.addLink (S32 ,S56 )
+        net.addLink (S33 ,S38 )
+        net.addLink (S34 ,S44 )
+        net.addLink (S34 ,S43 )
+        net.addLink (S35 ,S37 )
+        net.addLink (S35 ,S39 )
+        net.addLink (S36 ,S64 )
+        net.addLink (S36 ,S48 )
+        net.addLink (S37 ,S68 )
+        net.addLink (S37 ,S45 )
+        net.addLink (S38 ,S54 )
+        net.addLink (S38 ,S41 )
+        net.addLink (S42 ,S60 )
+        net.addLink (S45 ,S55 )
+        net.addLink (S46 ,S67 )
+        net.addLink (S46 ,S57 )
+        net.addLink (S47 ,S65 )
+        net.addLink (S51 ,S58 )
+        net.addLink (S58 ,S61 )
+        net.addLink (S58 ,S70 )
+        net.addLink (S60 ,S69 )
+        net.addLink (S63 ,S64 )
+        net.addLink (S67 ,S68 )
         
 
         # Build The Network 
@@ -408,13 +407,13 @@ if __name__ == '__main__':
     G.add_edges_from([(1, 3), (1, 4), (1, 5), (1, 8), (1, 11), (1, 16), (1, 57), (1, 28), (2, 65), (2, 3), (2, 6), (2, 7), (2, 9), (2, 23), (2, 14), (2, 17), (2, 19), (2, 55), (2, 39), (2, 26), (3, 4), (3, 69), (3, 22), (3, 28), (4, 32), (4, 34), (4, 5), (4, 33), (4, 8), (4, 42), (4, 12), (4, 15), (4, 31), (5, 6), (5, 8), (5, 11), (5, 49), (5, 26), (6, 35), (6, 7), (6, 10), (6, 12), (6, 20), (7, 19), (7, 34), (7, 13), (7, 51), (7, 23), (7, 61), (8, 9), (8, 10), (8, 13), (8, 48), (8, 36), (9, 49), (9, 14), (11, 66), (11, 67), (11, 15), (11, 16), (11, 35), (11, 52), (11, 29), (12, 20), (12, 18), (12, 22), (13, 51), (13, 52), (13, 14), (14, 38), (14, 43), (14, 45), (14, 17), (14, 21), (14, 25), (15, 66), (15, 40), (15, 21), (15, 54), (16, 19), (16, 24), (16, 25), (17, 18), (17, 53), (18, 33), (18, 70), (18, 50), (18, 53), (18, 27), (19, 62), (20, 59), (20, 46), (21, 47), (21, 31), (22, 57), (23, 41), (23, 56), (23, 24), (23, 29), (24, 42), (24, 27), (24, 30), (25, 62), (25, 44), (25, 46), (26, 36), (26, 63), (27, 37), (27, 58), (27, 59), (27, 30), (28, 63), (29, 32), (29, 40), (30, 50), (30, 60), (30, 47), (32, 56), (33, 38), (34, 44), (34, 43), (35, 37), (35, 39), (36, 64), (36, 48), (37, 68), (37, 45), (38, 54), (38, 41), (42, 60), (45, 55), (46, 67), (46, 57), (47, 65), (51, 58), (58, 61), (58, 70), (60, 69), (63, 64), (67, 68)])
 
 
-    Nodes= nx.nodes(G)
+    Nodes= list(nx.nodes(G))
 
-    Edges= nx.edges(G)
+    Edges= list(nx.edges(G))
 
-    print 'The nodes are', Nodes
+    print('The nodes are', Nodes)
 
-    print 'The edges are', Edges
+    print('The edges are', Edges)
 
 
 
@@ -458,13 +457,13 @@ if __name__ == '__main__':
 
     Gama = np.random.uniform(0.002, 0.006, x)
 
-    print 'The links Gama is :\n', Gama
+    print('The links Gama is :\n', Gama)
 
     #-------------------------------------------------------------------------------------------------------------
 
-    print 'The minimum Length in the dictionary is:'
+    print('The minimum Length in the dictionary is:')
 
-    print Links_Lengths_Dictionary[min(Links_Lengths_Dictionary, key=lambda k: Links_Lengths_Dictionary[k])]
+    print(Links_Lengths_Dictionary[min(Links_Lengths_Dictionary, key=lambda k: Links_Lengths_Dictionary[k])])
 
     #-------------------------------------------------------------------------------------------------------------
 
@@ -476,21 +475,21 @@ if __name__ == '__main__':
 
     cc=[]
 
-    for i in range (len(Edges)):
+    for i in range(len(Edges)):
 
        cc.append((Links_Lengths_Dictionary[Edges[i]] / minimum))
 
-    print "The cable cut per year \n", cc
+    print("The cable cut per year \n", cc)
 
     #-------------------------------------------------------------------------------------------------------------
 
     MTBF=[]
 
-    for i in range (len(Edges)):
+    for i in range(len(Edges)):
 
         MTBF.append((cc[i]*365*24)/Links_Lengths_Dictionary[Edges[i]])
 
-    print "The MTBF of each link: \n", MTBF
+    print("The MTBF of each link: \n", MTBF)
 
     #-------------------------------------------------------------------------------------------------------------
 
@@ -504,7 +503,7 @@ if __name__ == '__main__':
 
     #print 'The Total length is :', Length_Sum
 
-    for i in range (len(Edges)):
+    for i in range(len(Edges)):
 
         #MTTR.append (round(float(Links_Lengths_Dictionary[Edges[i]]) / (float (Length_Sum)) *100))
 
@@ -520,7 +519,7 @@ if __name__ == '__main__':
 
         #MTTR.append (round(Links_Lengths_Dictionary[Edges[i]] * Gama[i]))
 
-    print "The MTTR of each link: \n", MTTR
+    print("The MTTR of each link: \n", MTTR)
 
 
 
@@ -598,13 +597,13 @@ if __name__ == '__main__':
 
     L=[] # List that contains a set of links as a class objects
 
-    for i in range (len(Edges)): # To initailize the link objects
+    for i in range(len(Edges)): # To initailize the link objects
 
         L.append((Links(Edges[i], i , Links_Lengths_Dictionary[Edges[i]], MTBF[i], MTTR[i], 0, 0, 0, True)))
 
 
 
-    for i in range (len(Edges)): # Generate the initial "Next_Failure" for all links
+    for i in range(len(Edges)): # Generate the initial "Next_Failure" for all links
 
         TTF= np.random.exponential(scale=L[i].MTBF, size=1) # Exponential Distribution[Mean= MTBF of current link]
 
@@ -612,21 +611,21 @@ if __name__ == '__main__':
 
 
 
-    for i in range (len(Edges)):
+    for i in range(len(Edges)):
 
-        print "Link %s that named % s with Length %s and MTBF equals to %s and MTTR %s and Next_Failure is %s and Failure counter equals to %s and failure probability equals to %s and the Link_state is %s" % (L[i].ID, L[i].Name, L[i].Length, L[i].MTBF, L[i].MTTR, L[i].Next_Failure, L[i].F_Count, L[i].P_Failure, L[i].Link_state)
-
-
+        print("Link %s that named %s with Length %s and MTBF equals to %s and MTTR %s and Next_Failure is %s and Failure counter equals to %s and failure probability equals to %s and the Link_state is %s" % (L[i].ID, L[i].Name, L[i].Length, L[i].MTBF, L[i].MTTR, L[i].Next_Failure, L[i].F_Count, L[i].P_Failure, L[i].Link_state))
 
 
 
-    for i in range (len(Edges)):
+
+
+    for i in range(len(Edges)):
 
         q.push(L[i].Name, L[i].Next_Failure)
 
 
 
-    print 'Test Q size', q.size()
+    print('Test Q size', q.size())
 
     #------------------------------------------------------------------------------
 
@@ -648,7 +647,7 @@ if __name__ == '__main__':
 
            L[link_return].Link_state = True
 
-           print 'The Link', L[link_return].ID, 'with Next_Failure =', L[link_return].Next_Failure ,'will be returened'
+           print('The Link', L[link_return].ID, 'with Next_Failure =', L[link_return].Next_Failure ,'will be returened')
 
            TTF2= np.random.exponential(scale=L[link_return].MTBF, size=1)
 
@@ -665,19 +664,19 @@ if __name__ == '__main__':
 
            net.configLinkStatus(switch1, switch2,'up')
 
-           print '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
+           print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
 
-           print 'The repaired link is ', switch1, '--', switch2
+           print('The repaired link is ', switch1, '--', switch2)
 
-           print '&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&'
+           print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
 
            q.push(L[link_return].Name, L[link_return].Next_Failure)
 
-           print 'The new Next_Failure of link', L[link_return].ID, 'is :', round(TTF2)
+           print('The new Next_Failure of link', L[link_return].ID, 'is :', round(TTF2))
 
         else:
 
-             print 'The link', L[link_return].ID ,'will be returened'
+             print('The link', L[link_return].ID ,'will be returened')
 
              TTF2= np.random.exponential(scale=L[link_return].MTBF, size=1)
 
@@ -688,7 +687,7 @@ if __name__ == '__main__':
 
              q.push(L[link_return].Name, L[link_return].Next_Failure)
 
-             print 'The new Next_Failure of link', L[link_return].ID, 'is :', round(TTF2)
+             print('The new Next_Failure of link', L[link_return].ID, 'is :', round(TTF2))
 
 
 
@@ -727,13 +726,13 @@ if __name__ == '__main__':
 
         global net
 
-        print time.time()
+        print(time.time())
 
 
 
         if (L[link].Link_state == False):
 
-          print 'The link', L[link].ID, ' poped out with Next_Failure =', L[link].Next_Failure
+          print('The link', L[link].ID, ' poped out with Next_Failure =', L[link].Next_Failure)
 
           switches_F = L[link].ID
 
@@ -743,11 +742,11 @@ if __name__ == '__main__':
 
           net.configLinkStatus(switch1, switch2,'down')
 
-          print '********************************************'
+          print('********************************************')
 
-          print 'The failed link is ', switch1, '--', switch2
+          print('The failed link is ', switch1, '--', switch2)
 
-          print '********************************************'
+          print('********************************************')
 
           mu = (math.log(L[link].MTTR) - ((0.5) * math.log(1 + ((0.6 * L[link].MTTR)**2 / L[link].MTTR**2))))
 
@@ -755,7 +754,7 @@ if __name__ == '__main__':
 
           Log_Normal = np.random.lognormal(mu, sig, 1) #Lognormal #distribution for the next Time To Recover event
 
-          print 'The link', L[link].ID, 'will wait up to', round(Log_Normal), 'to get recovery'
+          print('The link', L[link].ID, 'will wait up to', round(Log_Normal), 'to get recovery')
 
           scheduler.enter(round(Log_Normal)*60, 1, push, (L[link].Name,))
 
@@ -765,7 +764,7 @@ if __name__ == '__main__':
 
         else:
 
-           print 'The link', L[link].ID ,'will not wait and directly returned to the Q with a new Next_Time _To_Failure'
+           print('The link', L[link].ID ,'will not wait and directly returned to the Q with a new Next_Time _To_Failure')
 
            scheduler.enter(2, 1, push, (L[link].Name,))
 
@@ -797,14 +796,14 @@ if __name__ == '__main__':
 
            L[x].P_Failure = (float(L[x].F_Count) / float(Global_Failure_Counter)) * 100
 
-           print 'Link ', L[x].ID , 'will pop out from the Q with Next time to failure =', L[x].Next_Failure
+           print('Link ', L[x].ID , 'will pop out from the Q with Next time to failure =', L[x].Next_Failure)
 
-           print 'The probability of failure to the link', L[x].ID, 'is ', L[x].P_Failure, '%'
+           print('The probability of failure to the link', L[x].ID, 'is ', L[x].P_Failure, '%')
 
            if (L[x].P_Failure >= 0.25):  #The threshold T_omega condition is valid
 
                     Z_Flag = False
-                    print 'The link', L[x].ID, 'Has a failure probability over the threshould'
+                    print('The link', L[x].ID, 'Has a failure probability over the threshould')
                     Dicision_1 = sp.random.uniform(low=0.1,high=0.3,size=1)   # Anticipated failure distribution
                     Dicision = float(Dicision_1 - Dicision_1 % 0.01)
                     
@@ -814,16 +813,16 @@ if __name__ == '__main__':
                            L[x].F_Count+=1              # Increment the failure counter of the current link
                            Global_Failure_Counter+= 1   # Increment the global failure counter
                            k = L[x].ID
-                           print "The link that will fail and put in F_set file is :", k
+                           print("The link that will fail and put in F_set file is :", k)
                            row1 = "\"" + str(k) + "\"" + "," + "TP_FN" +"\n"
                            csv1.write(row1)
-                           csv1.close() 
+                           csv1.close()
 
                            if ((L[x].Next_Failure) > 2):
 
                                wt = (L[x].Next_Failure) - 2
 
-                               print 'The controller will receive a notification after wt', wt, 'mins'
+                               print('The controller will receive a notification after wt', wt, 'mins')
 
                                scheduler.enter(wt*60, 1, Send_To_Controller, (L[x].ID, L[x].P_Failure,)) #send a notification
 
@@ -831,28 +830,28 @@ if __name__ == '__main__':
 
                            else:  
                                   
-                                  print "The time window is too short to send a notificatoin about the true alarm"
+                                  print("The time window is too short to send a notificatoin about the true alarm")
  
                     else:                # Means the controller will receive a false positive alarm FP
                          L[x].Link_state = True      # Change link state to True as an indicator
                          F_Flag = False
                          if ((L[x].Next_Failure) > 2):
                             wt2 = (L[x].Next_Failure) - 2
-                            print 'The controller will receive a notification after wt2', wt2, 'mins'
+                            print('The controller will receive a notification after wt2', wt2, 'mins')
                             scheduler.enter(wt2*60, 1, Send_To_Controller, (L[x].ID, L[x].P_Failure,)) #send a notification 
                          else:
-                             print "The time window is too short to send a notification about false alarm"
+                             print("The time window is too short to send a notification about false alarm")
 
            else:
 
-                print 'The link', L[x].ID, 'Has a failure probability below the threshould'
+                print('The link', L[x].ID, 'Has a failure probability below the threshould')
 
            if (F_Flag==True and Z_Flag==True):
                
                L[x].F_Count+=1              # Increment the failure counter of the current link
                Global_Failure_Counter+= 1   # Increment the global failure counter
                k = L[x].ID
-               print "The link that will fail and put in F_set file is :", k
+               print("The link that will fail and put in F_set file is :", k)
                row1 = "\"" + str(k) + "\"" + "," + "TP_FN" +"\n"
                csv1.write(row1)
                csv1.close() 
@@ -861,18 +860,18 @@ if __name__ == '__main__':
 
         else:
 
-               print 'The Q is empty ... '
+               print('The Q is empty ... ')
 
         scheduler.run() #running the schedular
         
 
     #------------------------------------------------------------------------------
 
-    print '**************************************'
+    print('**************************************')
 
-    print 'START TIME:', time.time(), '-->', now
+    print('START TIME:', time.time(), '-->', now)
 
-    print '**************************************'
+    print('**************************************')
 
     time.sleep(120) # Wait up to 2 mins then start the event failure simulation
 

@@ -2,7 +2,7 @@
 import pox.lib.packet as pkt
 import zmq  # Here we get ZeroMQ
 import threading
-import thread
+import _thread
 import sys
 from collections import deque  # Standard python queue structure
 import json
@@ -21,7 +21,7 @@ from pox.openflow.discovery import Discovery
 from pox.lib.util import dpid_to_str
 import time
 from datetime import datetime
-from itertools import tee, izip
+from itertools import tee
 from matplotlib import pylab
 from pylab import *
 import igraph
@@ -118,7 +118,7 @@ class GraphPrediction(EventMixin):
             core.openflow.addListeners(self, priority = 0)
             core.openflow_discovery.addListeners(self)
         core.call_when_ready(startup, ('openflow','openflow_discovery'))
-        print "init completed"
+        print("init completed")
     #----------------------------------------------------------------------------------------
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''
     '  Function that receives a link as a pair and then  '
@@ -141,7 +141,7 @@ class GraphPrediction(EventMixin):
     def pairwise(self,iterable):
          a, b = tee(iterable)
          next(b, None)
-         return izip(a, b)
+         return zip(a, b)
     #---------------------------------------------------------------------------------------- 
     '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     ' Function that search about the any received pair of nodes     '
@@ -154,7 +154,7 @@ class GraphPrediction(EventMixin):
         for key in d_3.keys():
             if key == key_to_find:
                d_3[key] = new_route
-               print 'The new updated route of', key_to_find, 'is:', d_3[key]
+               print('The new updated route of', key_to_find, 'is:', d_3[key])
 
     #---------------------------------------------------------------------------------------- 
     '''''''''''''''''''''''''''''''''''''''''''''''''''''
@@ -165,7 +165,7 @@ class GraphPrediction(EventMixin):
     '''''''''''''''''''''''''''''''''''''''''''''''''''''
 
     def remove_duplicates(self, lst):
-        return collections.OrderedDict(zip(lst, lst)).values()
+        return list(collections.OrderedDict(zip(lst, lst)).values())
 
     def Prediction_Checker(self, P_Link, prob, Potentials = [], *args):
         global L_PATHS
@@ -179,10 +179,10 @@ class GraphPrediction(EventMixin):
         topology = fnss.from_autonetkit(self.G)
         fnss.set_weights_constant(topology, 1)
 
-        print 'Hi, Im Prediction_Checker function ... '
+        print('Hi, Im Prediction_Checker function ... ')
         F = self.Check (P_Link, F_SET)
         if F == True:
-           print 'True Positive, the link is in F_SET'
+           print('True Positive, the link is in F_SET')
            row4 = "\"" + str(P_Link) + "\"" + "," + "successfully predicted" + "," + str(len(Potentials)) + "\n"
            csv4.write(row4)
            #Now we will add the Potentials to the labeled paths L_PATHS
@@ -197,9 +197,9 @@ class GraphPrediction(EventMixin):
            csv2.write(row2) #flaps of TP
  
         else:
-           print 'False Positive, its false alarm'
-           print 'The false Potential paths are: \n ', Potentials
-           print 'Will remove from the Potential paths ...'
+           print('False Positive, its false alarm')
+           print('The false Potential paths are: \n ', Potentials)
+           print('Will remove from the Potential paths ...')
            row3 = "\"" + str(P_Link) + "\"" + "," + "False" +"\n"        
            csv3.write(row3)
 
@@ -215,13 +215,13 @@ class GraphPrediction(EventMixin):
                Potentials.pop(0)
            UNDER_PREDICTION_PROCESS.pop() # Remove from stack as they considered as a false alarm
 
-           print '-------------------------------------'
-           print '**Potentials now are -->', Potentials
-           print '-------------------------------------'
-           print '**The updated L_PATHS are -->', L_PATHS
-           print '-------------------------------------'
-           print '**The current Queue pairs are:', UNDER_PREDICTION_PROCESS.traverse()
-           print '-------------------------------------'
+           print('-------------------------------------')
+           print('**Potentials now are -->', Potentials)
+           print('-------------------------------------')
+           print('**The updated L_PATHS are -->', L_PATHS)
+           print('-------------------------------------')
+           print('**The current Queue pairs are:', UNDER_PREDICTION_PROCESS.traverse())
+           print('-------------------------------------')
 
         csv2.close()
         csv3.close()
@@ -245,16 +245,16 @@ class GraphPrediction(EventMixin):
         fnss.set_weights_constant(topology, 1)
         csv1 = open(Availability_file, "a")
         csv2 = open(Flap_file, "a")
-        print 'We are inside Down function now . . . '
+        print('We are inside Down function now . . . ')
         #First step --> cutting each path in d_3 into set of pairs (e.g. [1,2,3] = [(1,2),(2,3)] in store in d_f
         for i in range (len(d_3)):
             for pair in self.pairwise(d_3.values()[i]):
                 d_f[d_3.keys()[i]].append(pair)
         #print 'The current d_f is', d_f
         #Second step --> check if the faild link is involved in the current paths of d_f
-        for i in range (len(d_f)):
-            Temp =  list(d_f.values())[i]
-            Flag = self.Check (tuple(Down_link), Temp)
+        for i in range(len(d_f)):
+            Temp = list(d_f.values())[i]
+            Flag = self.Check(tuple(Down_link), Temp)
             if Flag == True:
                faild_paths.append(list(d_f.keys())[i])
                L_PATHS.append(list(d_f.keys())[i]) # Adding those potential paths as a labeled ones to L_PATHS set       
@@ -262,14 +262,14 @@ class GraphPrediction(EventMixin):
 
         #Step three --> find an alternative path (with dijkstra) for all the affected paths in the faild_paths
         if not faild_paths:
-               print 'There are no affected paths at the moment when the ', Down_link , 'fails'
-               print faild_paths
+               print('There are no affected paths at the moment when the ', Down_link , 'fails')
+               print(faild_paths)
                row1 = "\"" + str(Down_link) + "\"" + "," + "Faild but predicted" + "," + str(len(faild_paths)) + "," + str(len(d_3) - len(faild_paths)) + "\n"
                csv1.write(row1)
   
         else:
-               print 'The affected paths are: \n', faild_paths
-               print 'There are currently', len(faild_paths), 'paths suffering from service unavailability'
+               print('The affected paths are: \n', faild_paths)
+               print('There are currently', len(faild_paths), 'paths suffering from service unavailability')
                row1 = "\"" + str(Down_link) + "\"" + "," + "Faild but not predicted" + "," + str(len(faild_paths)) + "," + str(len(d_3) - len(faild_paths)) + "\n"
                csv1.write(row1)
         
@@ -283,8 +283,8 @@ class GraphPrediction(EventMixin):
         csv2.write(row2) #flaps of FN
         csv2.close()
         #for i in d_3:
-            #print 'Routes after update', d_3[i]
-        print 'There are currently', len(L_PATHS), 'labeled paths'
+            #print('Routes after update', d_3[i])
+        print('There are currently', len(L_PATHS), 'labeled paths')
         csv1.close()
     #---------------------------------------------------------------------------------------- 
 
@@ -307,19 +307,19 @@ class GraphPrediction(EventMixin):
         #for i in range(len(PATHS)):
             #src = PATHS[i][0] 
             #dst = PATHS[i][1]
-            #print edge_disjoint_shortest_pair(topology, src, dst)
+            #print(edge_disjoint_shortest_pair(topology, src, dst))
         #End of Dis-joint paths procedure
         
         # Procedure of detecting the paths whose includes the predected link
-        print "The link that will faile is  = {}".format(edge)
-        print "The link probability that will faile is  = {}".format(edge_probability)
-        print "POX is now calling the function prepare_link_failure"
+        print("The link that will faile is  = {}".format(edge))
+        print("The link probability that will faile is  = {}".format(edge_probability))
+        print("POX is now calling the function prepare_link_failure")
         #Step 1
         for i in range (len(d_3)):
             #p= nx.shortest_path(self.G, source= PATHS[i][0], target = PATHS[i][1]) #shortest path of each pair
             #p = edge_disjoint_shortest_pair(topology, PATHS[i][0], PATHS[i][1])
-            for pair in self.pairwise(d_3.values()[i]):
-                d[d_3.keys()[i]].append(pair)
+            for pair in self.pairwise(list(d_3.values())[i]):
+                d[list(d_3.keys())[i]].append(pair)
         #Step 2
             #for pair in self.pairwise(p[0]):
                 #d[PATHS[i]].append(pair)
@@ -327,9 +327,9 @@ class GraphPrediction(EventMixin):
         POTENTIAL_PATHS = []
         Two_disjoint_paths = []
         The_Link = ast.literal_eval(edge) # To convert the link from Unicode to Tuple object
-        for i in range (len(d)):
-            TMP =  list(d.values())[i]
-            Flag = self.Check (The_Link , TMP)
+        for i in range(len(d)):
+            TMP = list(d.values())[i]
+            Flag = self.Check(The_Link, TMP)
             if Flag == True:
                POTENTIAL_PATHS.append(list(d.keys())[i])
                #L_PATHS.append(list(d.keys())[i]) #Adding those potential paths as a labeled ones to L_PATHS set
@@ -338,31 +338,31 @@ class GraphPrediction(EventMixin):
                #print 'Stack now contains', UNDER_PREDICTION_PROCESS.traverse()
 
         if not POTENTIAL_PATHS:
-               print 'There are no Potential paths that affected from the link', The_Link , 'failure'
-               print "No Risk in this scenario"
-               print POTENTIAL_PATHS
+               print('There are no Potential paths that affected from the link', The_Link, 'failure')
+               print("No Risk in this scenario")
+               print(POTENTIAL_PATHS)
         else:
                Risk_flag = True
-               print " There is a Risk in this scenario"
-               print '------------------------------------------- \n'
-               print 'The potential paths are: \n', POTENTIAL_PATHS
-               print '------------------------------------------- \n'
-               print 'There are currently', len(POTENTIAL_PATHS), 'Potential paths'
-               print '------------------------------------------- \n'
-               print 'Currently the Queue contains the following pairs: \n', UNDER_PREDICTION_PROCESS.traverse()
-               print '------------------------------------------- \n'
+               print(" There is a Risk in this scenario")
+               print('-------------------------------------------')
+               print('The potential paths are: \n', POTENTIAL_PATHS)
+               print('-------------------------------------------')
+               print('There are currently', len(POTENTIAL_PATHS), 'Potential paths')
+               print('-------------------------------------------')
+               print('Currently the Queue contains the following pairs: \n', UNDER_PREDICTION_PROCESS.traverse())
+               print('-------------------------------------------')
         if (Risk_flag == True):
             
-            print "the probability of link failure =", fast_real(edge_probability)
-            print "EBC =", len(POTENTIAL_PATHS)
-            print "consequence =", len(POTENTIAL_PATHS), "/", "283 = ", float(len(POTENTIAL_PATHS)) / float(283)
+            print("the probability of link failure =", fast_real(edge_probability))
+            print("EBC =", len(POTENTIAL_PATHS))
+            print("consequence =", len(POTENTIAL_PATHS), "/", "283 = ", float(len(POTENTIAL_PATHS)) / float(283))
             Risk = fast_real(edge_probability) * float(len(POTENTIAL_PATHS)) / float(283)
-            print "The Risk =", Risk
+            print("The Risk =", Risk)
         if (Risk > 0):  #Risk threshold Tw
          UNDER_PREDICTION_PROCESS.push(list(POTENTIAL_PATHS))
-         print '------------------------------- \n'
-         print "The Risk threshold is reached"
-         print '------------------------------- \n'
+         print('-------------------------------')
+         print("The Risk threshold is reached")
+         print('-------------------------------')
          for i in range(len(POTENTIAL_PATHS)):
             src = POTENTIAL_PATHS[i][0]
             dst = POTENTIAL_PATHS[i][1]
@@ -373,29 +373,29 @@ class GraphPrediction(EventMixin):
                 key = (src, dst)
                 value = Two_disjoint_paths[1]
                 if (key in d_3 and value == d_3[key]):
-                    print "disj[1] exisit in d_3, we will replace with disj[2]"
+                    print("disj[1] exisit in d_3, we will replace with disj[2]")
                     self.replace_dictionary_values(POTENTIAL_PATHS[i], Two_disjoint_paths[2])
                 else:
-                    print "disj[1] not exisit in d_3, we will replace with disj[1]"
+                    print("disj[1] not exisit in d_3, we will replace with disj[1]")
                     self.replace_dictionary_values(POTENTIAL_PATHS[i], Two_disjoint_paths[1])
                 #----------------
                 #self.replace_dictionary_values(POTENTIAL_PATHS[i], Two_disjoint_paths[1])
             except:
-                   print 'There is no disjoint path currently available for the flow --> ', POTENTIAL_PATHS[i]
+                   print('There is no disjoint path currently available for the flow --> ', POTENTIAL_PATHS[i])
                    # When there is no proactive recovery for this flow
         
          threading.Timer(150, self.Prediction_Checker, (The_Link, fast_real(edge_probability), POTENTIAL_PATHS,)).start()
          #After 2.5 min check if the predicted link in F_SET or not
 
          #for i in d_3:
-            #print 'Routes after update', d_3[i]
-         print 'There are currently', len(L_PATHS), 'labeled paths'
+            #print('Routes after update', d_3[i])
+         print('There are currently', len(L_PATHS), 'labeled paths')
          self.socket.send_string("There is a link predicted to fail soon.")  # Publish status
         else:
              
-             print '------------------------------- \n'
-             print "The Risk threshold is not reached"
-             print '------------------------------- \n'
+             print('-------------------------------')
+             print("The Risk threshold is not reached")
+             print('-------------------------------')
              #print '------------------------------------------- \n'
              #UNDER_PREDICTION_PROCESS.pop() # Remove from stack 
              #print 'Currently the Queue contains the following pairs: \n', UNDER_PREDICTION_PROCESS.traverse()
@@ -413,21 +413,21 @@ class GraphPrediction(EventMixin):
         topology = fnss.from_autonetkit(self.G)
         fnss.set_weights_constant(topology, 1)
         csv2 = open(Flap_file, "a")
-        print 'Im your updater function . . . '
+        print('Im your updater function . . . ')
   
         if State == True:
-           print 'Its an added event of the link', link
+           print('Its an added event of the link', link)
            
            if not F_SET:   #Means the failure set is curently empty
-                 print 'F_SET is empty now . . . '
+                 print('F_SET is empty now . . . ')
            else:
                  F_SET.remove(link)   
         
-           if not L_PATHS :  
-              print 'There is no labeled/sub-optimal paths now ...'
+           if not L_PATHS:
+              print('There is no labeled/sub-optimal paths now ...')
  
            else:
-              print 'The current sub-optimal path pairs are \n', L_PATHS
+              print('The current sub-optimal path pairs are \n', L_PATHS)
               i=0  # counter
               #for i in range (len(L_PATHS)):
               while (i < len(L_PATHS)):
@@ -442,30 +442,30 @@ class GraphPrediction(EventMixin):
                   if (UNDER_PREDICTION_PROCESS.isEmpty()!=True): #To check whether the Stack is empty or not
                       x = UNDER_PREDICTION_PROCESS.traverse()
                       #Is_Predictted = False
-                      print 'The Current Stack pairs are', x
+                      print('The Current Stack pairs are', x)
                       for ii in range (len(x)):
                           for jj in range (len(x[ii])):
                               if set(L_PATHS[i]) == set(x[ii][jj]):
-                                 print 'The current path', L_PATHS[i], 'is in a prediction condition and should not be changed'
+                                 print('The current path', L_PATHS[i], 'is in a prediction condition and should not be changed')
                                  Is_Predictted = True
                                  break
                               #else:
                                    #print 'The current pair', L_PATHS[i], 'is not under prediction consideration'
 
                   if Is_Predictted == False:
-                        print 'Now --> is_Predictted == False ...'
+                        print('Now --> is_Predictted == False ...')
                   if Is_Predictted == True:
                         Moderator = True
-                        print 'Now --> is_Predictted == True ... '
-                        print 'The current Labeled pair',  L_PATHS[i], 'will be the same without changing'
+                        print('Now --> is_Predictted == True ... ')
+                        print('The current Labeled pair', L_PATHS[i], 'will be the same without changing')
                      #---------------------------------------------------------------------------------------------------------------
 
-                  print ' i now is :', i
-                  print 'The L_PATHS[i] is ', L_PATHS[i]
+                  print(' i now is :', i)
+                  print('The L_PATHS[i] is ', L_PATHS[i])
                   if len(d_3[(L_PATHS[i])]) > len(d_2[(L_PATHS[i])]) and Is_Predictted == False: 
                      #check the sub-optimals against the optimals (first condition)
                      Observer = False
-                     print 'The pair', L_PATHS[i], 'is currently sub-optimal and need to be replaced'
+                     print('The pair', L_PATHS[i], 'is currently sub-optimal and need to be replaced')
                      #--------------------------------------------------------------------------------------------------------------
                      #The below procedure is to check whether the Labeled pair is under prediction, if so, then no need to update
                      # as it is currently planned to be in sub-optimal state to avoid the possible failure.
@@ -494,34 +494,34 @@ class GraphPrediction(EventMixin):
                      try:
                         Dis_j = edge_disjoint_shortest_pair(topology, st, tr)
                      except:
-                        print 'There is no disjoint path at the moment for the current pair:', L_PATHS[i]
+                        print('There is no disjoint path at the moment for the current pair:', L_PATHS[i])
                         Dis_j = nx.dijkstra_path(topology, st, tr) # we use Dijkstra in case of there is no disjoint path
  
                      if len(Dis_j[0]) == len(d_2[(L_PATHS[i])]) and Is_Predictted == False:
-                           print 'Matched the condition 1 . . . '
+                           print('Matched the condition 1 . . . ')
                            self.replace_dictionary_values(L_PATHS[i], Dis_j[0]) # Go back to the optimal path flow_b1
-                           print 'Replaced Succefully and', L_PATHS[i], 'Get Removed from -->  L_PATHS set'
+                           print('Replaced Succefully and', L_PATHS[i], 'Get Removed from -->  L_PATHS set')
                            flaps_counter = flaps_counter + 1
                            L_PATHS.pop(i) #To remove the labeled pair from the sub-optimal list
                            Moderator = False
-                           print 'L_PATHS currently has', len(L_PATHS), 'pair'
-                           print L_PATHS
+                           print('L_PATHS currently has', len(L_PATHS), 'pair')
+                           print(L_PATHS)
                      
                      elif (len(Dis_j[0]) > len(d_2[(L_PATHS[i])])) and (len(Dis_j[0]) < len(d_3[(L_PATHS[i])])) and Is_Predictted == False:
-                           print 'Matched the condition 1-A . . . '
+                           print('Matched the condition 1-A . . . ')
                            self.replace_dictionary_values(L_PATHS[i], Dis_j[0]) # change to a better sub-optimal path
-                           print 'Replaced Succefully but', L_PATHS[i], 'still resides in -->  L_PATHS set'
+                           print('Replaced Succefully but', L_PATHS[i], 'still resides in -->  L_PATHS set')
                            flaps_counter = flaps_counter + 1
                            Moderator = True
-                           print 'L_PATHS currently has', len(L_PATHS), 'pair'
-                           print L_PATHS
+                           print('L_PATHS currently has', len(L_PATHS), 'pair')
+                           print(L_PATHS)
 
-                     elif (len(Dis_j[0]) == len(d_3[(L_PATHS[i])])) and ( len(d_3[(L_PATHS[i])]) != len( d_2[(L_PATHS[i])])) and Is_Predictted == False:
-                           print 'Mathched the condition 1-B ..., No solution is founded for the current flow'
-                           print 'No replace'
+                     elif (len(Dis_j[0]) == len(d_3[(L_PATHS[i])])) and (len(d_3[(L_PATHS[i])]) != len(d_2[(L_PATHS[i])])) and Is_Predictted == False:
+                           print('Mathched the condition 1-B ..., No solution is founded for the current flow')
+                           print('No replace')
                            Moderator = True
-                           print 'L_PATHS currently has', len(L_PATHS), 'pair'
-                           print L_PATHS      
+                           print('L_PATHS currently has', len(L_PATHS), 'pair')
+                           print(L_PATHS)      
                            
                                   
                      #else:
@@ -530,40 +530,38 @@ class GraphPrediction(EventMixin):
  
                   if (len(d_3[(L_PATHS[i])]) == len(d_2[(L_PATHS[i])])) and (Observer==True) and Is_Predictted == False: 
                      #check the sub-optimals against the optimals when first condition doesn not match
-                     print ' Matched the condition 2 \n The sub-optimal and optimal has same number of hops'
-                     print L_PATHS[i], 'Get removed'
+                     print(' Matched the condition 2 \n The sub-optimal and optimal has same number of hops')
+                     print(L_PATHS[i], 'Get removed')
                      L_PATHS.pop(i) #To remove the labeled pair from the sub-optimal list
                      Moderator = False
                      #Observer = False
-                     print 'L_PATHS currently has', len(L_PATHS), 'pair'
-                     print L_PATHS
-                  
-                  if (len(d_3[(L_PATHS[i])]) < len(d_2[(L_PATHS[i])])) and (Observer==True) and Is_Predictted == False:
+                     print('L_PATHS currently has', len(L_PATHS), 'pair')
+                     print(L_PATHS)
                      #This condition tackle the case when the current path (in d_3) has lenght less than the optimal one (in d_2)  
-                     print ' Matched the condition 3 \n The sub-optimal has less length than the optimal'
-                     print 'state of d_2', d_2[(L_PATHS[i])]
-                     print 'state of d_3', d_3[(L_PATHS[i])]
+                     print(' Matched the condition 3 \n The sub-optimal has less length than the optimal')
+                     print('state of d_2', d_2[(L_PATHS[i])])
+                     print('state of d_3', d_3[(L_PATHS[i])])
                      d_2[(L_PATHS[i])] = d_3[(L_PATHS[i])]
                      #flaps_counter = flaps_counter + 1               
-                     print 'After change, d_2 becomes = ', d_2[(L_PATHS[i])]
-                     print '***********************************************'
-                     print L_PATHS[i], 'Get removed'
+                     print('After change, d_2 becomes = ', d_2[(L_PATHS[i])])
+                     print('***********************************************')
+                     print(L_PATHS[i], 'Get removed')
                      L_PATHS.pop(i) #To remove the labeled pair from the sub-optimal list
                      Moderator = False
-                     print 'L_PATHS currently has', len(L_PATHS), 'pair'
-                     print L_PATHS
+                     print('L_PATHS currently has', len(L_PATHS), 'pair')
+                     print(L_PATHS)
 
                   if Moderator == True: 
                      i = i+1
                   
                        
-        print 'Currently, there are ', len(L_PATHS), 'of sub-optimal paths in L_PATHS'
-        print 'The flaps_counter = ', flaps_counter
+        print('Currently, there are ', len(L_PATHS), 'of sub-optimal paths in L_PATHS')
+        print('The flaps_counter = ', flaps_counter)
         row2 = "\"" + str(link) + "\"" + "," + "Up" + "," + "0" + "," + str(flaps_counter) +"\n"
         csv2.write(row2) #flaps of U
         csv2.close()
         if State == False:
-           print 'Its a remove event of link', link
+           print('Its a remove event of link', link)
            F_SET.append(link)
            
            #Thrd3= threading.Thread(target=self.Down, args=(link,))
@@ -601,18 +599,18 @@ class GraphPrediction(EventMixin):
             try:
                 self.G.remove_edge(sw1,sw2)
                 topology = fnss.from_autonetkit(self.G)
-                print sw1, "---", sw2, "fails"
+                print(sw1, "---", sw2, "fails")
                 link_x = [sw1,sw2]
                 TT = False
             except:
-                print "remove edge error"
+                print("remove edge error")
         try:
              
              T = True
              N= nx.number_of_nodes(self.G)
-             print "Number of nodes", N
+             print("Number of nodes", N)
              E= nx.number_of_edges(self.G)
-             print "Number of Edges", E
+             print("Number of Edges", E)
              
              #if (N == 26) and (E == 42) and (cc > 0):   #For US Topo
              #if (N == 50) and (E == 88) and (cc > 0):   #For German Topo
@@ -624,8 +622,8 @@ class GraphPrediction(EventMixin):
                  #threading.Timer(0.1, self.updater, (TT, link_x,)).start()
                  #Timer(3, self.updater, (TT, link_x,)).start()
                  
-                 if (TT == True) :
-                    print 'Its an added event'
+                 if (TT == True):
+                    print('Its an added event')
                    
              #if (N == 26) and (E < 42) and (cc > 0): #For US Topo
              #if (N == 50) and (E < 88) and (cc > 0): #For German Topo
@@ -638,40 +636,40 @@ class GraphPrediction(EventMixin):
 
                  #Timer(3, self.updater, (TT, link_x,)).start()
                  if (TT == True):
-                    print 'its an added event'
+                    print('its an added event')
                  if (TT == False):
-                    print 'its a removed event'
+                    print('its a removed event')
 
              #if (N == 26) and (E == 42) and (cc==0): #For US Topo
              #if (N == 50) and (E == 88) and (cc==0): #For German Topo
              if (N == 70) and (E == 140) and (cc==0):  #For Brite Topo
                  cc = cc + 1    # Now cc=1 
-                 print "Graph is ready now . . . "
-                 print "Graph nodes are: ",self.G.nodes()
+                 print("Graph is ready now . . . ")
+                 print("Graph nodes are: ", list(self.G.nodes()))
                  
              #------------------------------------------------------------------------------------------------------------    
-                 Nodes= nx.nodes(self.G)
-                 Edges= nx.edges(self.G)
+                 Nodes= list(nx.nodes(self.G))
+                 Edges= list(nx.edges(self.G))
                  # The below Procedure is to check whether there is a path between all possible pairs in the Network Graph
                  if c == 0:  # This is a condition to run the procedure only once
                     c+=1
-                    for i in range (nx.number_of_nodes(self.G)):
-                        for j in range (nx.number_of_nodes(self.G)):
+                    for i in range(nx.number_of_nodes(self.G)):
+                        for j in range(nx.number_of_nodes(self.G)):
                               if Nodes[i] != Nodes[j]:
                                  T= nx.has_path(self.G, Nodes[i], Nodes[j])
-                                 Flg = self.Check ((Nodes[i], Nodes[j]) , PATHS)
+                                 Flg = self.Check((Nodes[i], Nodes[j]), PATHS)
                                  if (T==True) and (Flg==False):  # Condition for path existence and not exists in PATHS list
                                      p= nx.dijkstra_path(self.G, Nodes[i], Nodes[j])
                                      if len(p) > 2:
                                         PATHS.append(tuple((Nodes[i],Nodes[j])))
-                    print 'All Possible PATHS are :'
-                    for i in range (len(PATHS)):
-                        print PATHS[i]
+                    print('All Possible PATHS are :')
+                    for i in range(len(PATHS)):
+                        print(PATHS[i])
                     
                  topology = fnss.from_autonetkit(self.G)
                  fnss.set_weights_constant(topology, 1)
 
-                 for i in range (len(PATHS)):
+                 for i in range(len(PATHS)):
                      source = PATHS[i][0]
                      destination = PATHS[i][1]
                      shortest_p = edge_disjoint_shortest_pair(topology, source, destination)
@@ -679,28 +677,28 @@ class GraphPrediction(EventMixin):
                      #sh_path= nx.shortest_path(self.G, source= PATHS[i][0], target = PATHS[i][1]) #shortest path of each pair
                      d_2[(PATHS[i])] = (sh_path)
                  
-                 print '------------------------------------------' 
-                 print 'The number of the all possible paths are: ', len(PATHS)
-                 print '------------------------------------------'
+                 print('------------------------------------------')
+                 print('The number of the all possible paths are: ', len(PATHS))
+                 print('------------------------------------------')
 
                  for i in d_2:
-                     print 'The optimal shortest path of the ', i, 'is : ', d_2[i]
+                     print('The optimal shortest path of the ', i, 'is : ', d_2[i])
 
-                 print '------------------------------------------'
-                 print 'The number of the all optimal shortest paths are: ', len(d_2)
-                 print '------------------------------------------'
+                 print('------------------------------------------')
+                 print('The number of the all optimal shortest paths are: ', len(d_2))
+                 print('------------------------------------------')
                  
                  d_3 = d_2.copy()  # Creat a copy of d_2 to make changes of the sub-optimal paths
                  
              #------------------------------------------------------------------------------------------------------------     
         except:
-            print "no such complete Graph yet..."
+            print("no such complete Graph yet...")
         pass
 
 #******************************************************************
 def request_dispatcher():
 
-    print "Starting request dispatcher..."
+    print("Starting request dispatcher...")
     context = zmq.Context.instance()
     socket = context.socket(zmq.REP)
     socket.bind(REQ_URL)
@@ -726,10 +724,10 @@ def request_dispatcher():
 #*********************************************************************
 def launch():
 
-    thread = threading.Thread(target=request_dispatcher)
+    dispatcher_thread = threading.Thread(target=request_dispatcher)
 
-    thread.daemon = True
+    dispatcher_thread.daemon = True
 
-    thread.start()
+    dispatcher_thread.start()
 
     core.registerNew(GraphPrediction)
