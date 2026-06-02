@@ -477,7 +477,8 @@ if __name__ == '__main__':
 
     for i in range(len(Edges)):
 
-       cc.append((Links_Lengths_Dictionary[Edges[i]] / minimum))
+       edge = tuple(sorted(Edges[i]))
+       cc.append(Links_Lengths_Dictionary[edge] / minimum)
 
     print("The cable cut per year \n", cc)
 
@@ -487,7 +488,8 @@ if __name__ == '__main__':
 
     for i in range(len(Edges)):
 
-        MTBF.append((cc[i]*365*24)/Links_Lengths_Dictionary[Edges[i]])
+        edge = tuple(sorted(Edges[i]))
+        MTBF.append((cc[i] * 365 * 24) / Links_Lengths_Dictionary[edge])
 
     print("The MTBF of each link: \n", MTBF)
 
@@ -505,11 +507,13 @@ if __name__ == '__main__':
 
     for i in range(len(Edges)):
 
-        #MTTR.append (round(float(Links_Lengths_Dictionary[Edges[i]]) / (float (Length_Sum)) *100))
+        edge = tuple(sorted(Edges[i]))
+        mttr = round(Links_Lengths_Dictionary[edge] * Gama[i])
+        #MTTR.append (round(float(Links_Lengths_Dictionary[edge]) / (float (Length_Sum)) *100))
 
         #MTTR.append (float(Links_Lengths_Dictionary[Edges[i]]) / (float (Length_Sum))) # stopped currently
 
-        mttr = (round(Links_Lengths_Dictionary[Edges[i]] * Gama[i]))
+        ####mttr = (round(Links_Lengths_Dictionary[Edges[i]] * Gama[i]))
 
         if mttr < 1:
 
@@ -599,13 +603,14 @@ if __name__ == '__main__':
 
     for i in range(len(Edges)): # To initailize the link objects
 
-        L.append((Links(Edges[i], i , Links_Lengths_Dictionary[Edges[i]], MTBF[i], MTTR[i], 0, 0, 0, True)))
+        edge = tuple(sorted(Edges[i]))
+        L.append(Links(Edges[i], i, Links_Lengths_Dictionary[edge], MTBF[i], MTTR[i], 0, 0, 0, True))
 
 
 
     for i in range(len(Edges)): # Generate the initial "Next_Failure" for all links
 
-        TTF= np.random.exponential(scale=L[i].MTBF, size=1) # Exponential Distribution[Mean= MTBF of current link]
+        TTF = np.random.exponential(scale=L[i].MTBF) # Exponential Distribution[Mean= MTBF of current link]
 
         L[i].Next_Failure = round(TTF) + 1 # To avoid zeros at the begining, we add (+1) to the TTF
 
@@ -649,7 +654,9 @@ if __name__ == '__main__':
 
            print('The Link', L[link_return].ID, 'with Next_Failure =', L[link_return].Next_Failure ,'will be returened')
 
-           TTF2= np.random.exponential(scale=L[link_return].MTBF, size=1)
+           #TTF2= np.random.exponential(scale=L[link_return].MTBF, size=1) #old
+           TTF2 = np.random.exponential(scale=L[link_return].MTBF)
+
 
            if TTF2 == 0:    # To avoid zeros
               TTF2 =1
@@ -752,9 +759,15 @@ if __name__ == '__main__':
 
           sig = math.sqrt((math.log (1 + ((0.6 * L[link].MTTR)**2 / L[link].MTTR**2))))
 
-          Log_Normal = np.random.lognormal(mu, sig, 1) #Lognormal #distribution for the next Time To Recover event
+          #Log_Normal = np.random.lognormal(mu, sig, 1) #Lognormal #distribution for the next Time To Recover event #old
 
+          #print('The link', L[link].ID, 'will wait up to', round(Log_Normal), 'to get recovery') #old
+          
+          Log_Normal = np.random.lognormal(mu, sig)
           print('The link', L[link].ID, 'will wait up to', round(Log_Normal), 'to get recovery')
+
+
+
 
           scheduler.enter(round(Log_Normal)*60, 1, push, (L[link].Name,))
 
@@ -855,7 +868,9 @@ if __name__ == '__main__':
                row1 = "\"" + str(k) + "\"" + "," + "TP_FN" +"\n"
                csv1.write(row1)
                csv1.close() 
-           moderator = sp.random.uniform(low=0.1,high=0.9,size=1)
+
+           moderator = np.random.uniform(low=0.1, high=0.9, size=1)[0]
+           # moderator = sp.random.uniform(low=0.1,high=0.9,size=1) #old
            scheduler.enter((L[x].Next_Failure)*60 + moderator, 1, schedule, (L[x].Name,)) # Next_Failure *60 --> in minutes
 
         else:
