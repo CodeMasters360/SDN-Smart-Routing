@@ -30,7 +30,6 @@ import numpy as np
 import networkx as nx, igraph as ig
 from random import randint
 from collections import defaultdict
-from itertools import tee, izip
 import fnss
 from fnss.units import capacity_units, time_units
 import fnss.util as util
@@ -38,7 +37,7 @@ import sched
 from threading import Timer
 import collections
 #calling disjoint path algorithm fuction as follows:
-from disjoint_paths import edge_disjoint_shortest_pair
+from .disjoint_paths import edge_disjoint_shortest_pair
 #-----------------------------------------------------
 #Define a Queue for the purpose of holding the predicted set of pairs
 class Queue:
@@ -60,7 +59,10 @@ class Queue:
      def traverse(self):
          return self.items
 #-----------------------------------------------------
+#print(type(core))
+#print(core)
 log = core.getLogger()
+
 # Setup the ZeroMQ endpoint URL.
 PUB_URL = "tcp://*:5555"  # Used for publishing information
 REQ_URL = "tcp://*:5556"  # Used to receive requests
