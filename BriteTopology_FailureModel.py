@@ -54,6 +54,9 @@ import heapq
 import scipy as sp
 import math
 
+
+import os
+
 #-------------------------------------------------------------------------------
 
 #context = zmq.Context()
@@ -61,13 +64,21 @@ import math
 #socket = context.socket(zmq.REQ)
 
 #socket.connect("tcp://localhost:5556")
+csv_files = [
+    "F_set.csv"
+]
+
+for csv_path in csv_files:
+    if os.path.exists(csv_path):
+        os.remove(csv_path)
 
 TP = "F_set.csv" 
 csv1 = open(TP, "a")
 columnTitle1 = "Link, State\n"
 csv1.write(columnTitle1)
 csv1.close()
-
+MAX_EVENTS = 20
+EVENT_COUNT = 0
 net = Mininet( controller=RemoteController, link=TCLink, switch=OVSKernelSwitch )
 
 G = nx.Graph()
@@ -612,7 +623,7 @@ if __name__ == '__main__':
 
         TTF = np.random.exponential(scale=L[i].MTBF) # Exponential Distribution[Mean= MTBF of current link]
 
-        L[i].Next_Failure = round(TTF) + 1 # To avoid zeros at the begining, we add (+1) to the TTF
+        L[i].Next_Failure = max(1, round(TTF * 0.1)) # To avoid zeros at the begining, we add (+1) to the TTF
 
 
 
@@ -661,7 +672,7 @@ if __name__ == '__main__':
            if TTF2 == 0:    # To avoid zeros
               TTF2 =1
 
-           L[link_return].Next_Failure = round(TTF2)
+           L[link_return].Next_Failure = max(1, round(TTF2 * 0.1))
 
            switches_R = L[link_return].ID
 
@@ -690,7 +701,7 @@ if __name__ == '__main__':
              if TTF2 == 0:    # To avoid zeros
                 TTF2 =1
 
-             L[link_return].Next_Failure = round(TTF2)
+             L[link_return].Next_Failure = max(1, round(TTF2 * 0.1))
 
              q.push(L[link_return].Name, L[link_return].Next_Failure)
 
@@ -790,6 +801,11 @@ if __name__ == '__main__':
     def get_out():
 
         global Global_Failure_Counter
+        global EVENT_COUNT, MAX_EVENTS
+        EVENT_COUNT += 1
+        if EVENT_COUNT >= MAX_EVENTS:
+            print("Reached MAX_EVENTS, stopping.")
+            return
 
         global X_param
         #sp.random.seed(123345)
@@ -803,6 +819,7 @@ if __name__ == '__main__':
            Z_Flag = True  #indicator
 
            x = q.pop()
+           EVENT_COUNT += 1
 
            L[x].Link_state = False      # Change link state to false as an indicator that link is going to fail
 
