@@ -1,0 +1,23 @@
+# Core SDN / simulation dependencies
+networkx>=2.0,<3.0
+fnss==0.9.1
+
+# Communication
+pyzmq
+
+# Scientific computing (must be compatible with NumPy API)
+numpy>=1.21,<2.0
+scipy>=1.7,<2.0
+
+# Visualization
+matplotlib
+
+# Graph processing
+python-igraph
+fastnumbers
+
+# Mininet (install via system package recommended)
+mininet
+
+
+#finally: pip install "fnss==0.9.1" "networkx>=2.0,<3.0"
