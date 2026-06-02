@@ -13,11 +13,20 @@ Run the controller with:
 python3 pox.py openflow.discovery forwarding.l2_learning SDN-Smart-Routing.Smart_Routing_Module
 ````
 
+
+### Structure:
+pox/
+├── pox.py
+├── sdn_smart_routing/
+│   ├── __init__.py
+│   └── Smart_Routing_Module.py
+└── ...
+
 ---
 
 ## 2. Python Environment Requirements
 
-> ⚠️ This project is based on legacy SDN libraries and is not fully compatible with Python 3.12 without version constraints.
+> ⚠️ This project is based on legacy SDN libraries and is not fully compatible with Python 3.12 without version constraints. (Ubuntu 24 LTS)
 
 ---
 
@@ -43,6 +52,12 @@ mininet
 
 ```bash
 pip install "fnss==0.9.1" "networkx>=2.0,<3.0"
+```
+
+and
+
+```bash
+apt install mininet
 ```
 
 ---
