@@ -36,6 +36,20 @@ import fnss.util as util
 import sched
 from threading import Timer
 import collections
+import os
+csv_files = [
+    "my_availability.csv",
+    "my_availability2.csv",
+    "my_flaps.csv",
+    "my_prediction.csv",
+]
+
+for csv_path in csv_files:
+    if os.path.exists(csv_path):
+        os.remove(csv_path)
+
+
+
 #calling disjoint path algorithm fuction as follows:
 from .disjoint_paths import edge_disjoint_shortest_pair
 #-----------------------------------------------------
@@ -59,8 +73,8 @@ class Queue:
      def traverse(self):
          return self.items
 #-----------------------------------------------------
-#print(type(core))
-#print(core)
+print(type(core))
+print(core)
 log = core.getLogger()
 
 # Setup the ZeroMQ endpoint URL.
